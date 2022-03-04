@@ -6,27 +6,38 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Utilitaria {
     Scanner leitorString = new Scanner(System.in);
     Scanner leitor = new Scanner(System.in);
+    String nomeDigitado;
     
     void exibirLinha(){
        System.out.println("-".repeat(72));
     }
     
-    void exibirNome(String nome){
+    void exibirNome(){
+        System.out.println("Digite seu nome: ");
+        nomeDigitado = leitorString.nextLine();
         System.out.println(String.format("Olá %s, Bem Vinda(o) ao nosso "
-                + "MenuSpotify",nome));
+                + "MenuSpotify",nomeDigitado));
      }
-    
-    Double retornarMutiplicação(Integer valor1, Double valor2){
-        Double totalMinutos = valor1 * valor2;
-                System.out.println(String.format("Você costuma passar "
-                + "aproximadamente %.1f minutos no Spotify por dia ", totalMinutos));
+      
+    Double retornarMutiplicação(){
+        System.out.println("Quantas musicas ouve por dia: ");
+        Integer musicasInformados = leitor.nextInt();
+        System.out.println("Quantos minutos geralmente cada musica tem: ");
+        Double minutosInformados = leitor.nextDouble();
+        Double totalMinutos = musicasInformados * minutosInformados;
+        
+        exibirLinha();
+        
+        System.out.println(String.format("Você costuma passar "
+                + "aproximadamente %.0f minutos no Spotify por dia ", totalMinutos));
                 
                 if(totalMinutos >= 200){
-                    System.out.println("Você é um ouvinte fora do normal");
+                    System.out.println("--------------Você é um ouvinte fora do normal--------------");
                 }
                 else{
-                    System.out.println("Você é um ouvinte comum no Spotify");
+                    System.out.println("--------------Você é um ouvinte comum no Spotify--------------");
                 }
+        exibirLinha();
         return totalMinutos;
     }   
     
@@ -37,8 +48,11 @@ public class Utilitaria {
                                  + "rap\n"
                                  + "pagode\n"
                                  + "gospel");
+        System.out.println("--------Digite da mesma forma que está nas opções--------");
+        exibirLinha();
         String estiloDigitado = leitorString.nextLine();
-
+        exibirLinha();
+        
         if ("funk".equals(estiloDigitado)) {
             System.out.println("Playlist Funk: \n"
                     + "Cavalo De Troia MC Kevin.\n"
@@ -74,20 +88,40 @@ public class Utilitaria {
                     + "Raridade.\n"
                     + "Só o começo");
         }
-        System.out.println("-".repeat(72));
+        exibirLinha();
         System.out.println("Aproveite sua nova playlist");
         return estiloDigitado;
     }
     
-    Integer exibirNovaPlaylist() { 
+    String exibirPlaylistInformada(){
         
+         System.out.println("Compartilhe as músicas que "
+                        + "já tem: (Maximo 10 músicas)");
+        String todasMusicas = " ";
+        for (int i = 1; i <= 10; i++) {
+            System.out.println((i) + "ª Música: ");
+            String playlistCompartilhada = leitorString.nextLine();
+            todasMusicas += playlistCompartilhada + "\n"; 
+        }
+        exibirLinha();
+        System.out.println(String.format("Essa é a sua: %s",todasMusicas)); 
+        exibirNovaPlaylist();
+        
+        return todasMusicas;
+    }
+    
+    Integer exibirNovaPlaylist() { 
+        exibirLinha();
         System.out.println("Digite um número para"
                             + " receber uma Playlist aleatória");
                 
         System.out.println("Opções: 1,2,3");
         Integer numeroInformado = leitor.nextInt();
         Integer musicasAleatorias = ThreadLocalRandom.current().nextInt(1,3);
-        System.out.println("Essa é a nossa: ");            
+        
+        exibirLinha();
+        System.out.println("Essa é a nossa: "); 
+        
         switch (numeroInformado){
             case 1:
                 System.out.println("Playlist NumaNIce: \n"
@@ -119,30 +153,15 @@ public class Utilitaria {
             default:
                 break;
         }
+        exibirLinha();
         return musicasAleatorias;
     }
     
-    String exibirPlaylistInformada(){
-        
-         System.out.println("Compartilhe as músicas que "
-                        + "já tem: (Maximo 10 músicas)");
-        String todasMusicas = " ";
-        for (int i = 1; i <= 10; i++) {
-            System.out.println((i) + "ª Música: ");
-            String playlistCompartilhada = leitor.nextLine();
-            todasMusicas += playlistCompartilhada + "\n"; 
-        }
-        
-        System.out.println(String.format("Essa é a sua: %s",todasMusicas)); 
-        
-        return todasMusicas;
-    }
-    
-    void exibirRegrasJogo(String nome){
+    void exibirRegrasJogo(){
         System.out.println(String.format("Bem vinda(o) ao nosso "
-                        + "caseMusical %s",nome));
+                        + "caseMusical %s",nomeDigitado));
         
-        System.out.println("-".repeat(72));
+        exibirLinha();
         
         System.out.println("Manual: \n"
                     + "O jogo contém 10 perguntas \n"
@@ -154,23 +173,31 @@ public class Utilitaria {
          
     }
     
-    Integer iniciarJogo(){
+    void iniciarJogo(){
+        exibirLinha();
+        
         System.out.println("Deseja iniciar o jogo?\n"
                                  + "1 - Sim\n"
                                  + "2 - Não\n");
+        exibirLinha();
         Integer escolhaDigitada = leitor.nextInt();
+        
         switch(escolhaDigitada){
             case 1:
+                exibirLinha();
                 System.out.println("Quiz iniciado");
+                exibirPerguntas();
+                retonarPontuacao();
                 break;
             default:
                 break;
         }
-        return escolhaDigitada;
     }
     
     void exibirPerguntas(){
 
+        exibirLinha();
+        
         System.out.println("Pergunta1 - Nome do artista que canta Luz na Caminhada:");
         System.out.println("Pergunta2 - Primeiro sucesso do mc hariel :");
         System.out.println("Pergunta3 - Dono do single: Heartbreak Anniversary");
@@ -184,10 +211,11 @@ public class Utilitaria {
     }
     
     void retonarPontuacao(){
+        exibirLinha();
         
         Integer pontos = 10;
         
-        System.out.println("Pergunta1 - Resposta: ");
+                System.out.println("Pergunta1 - Resposta: ");
                 String pergunta1 = leitorString.nextLine();
                 System.out.println("Pergunta2 - Resposta: ");
                 String pergunta2 = leitorString.nextLine();
@@ -207,6 +235,8 @@ public class Utilitaria {
                 String pergunta9 = leitorString.nextLine();
                 System.out.println("Pergunta10 - Resposta: ");
                 String pergunta10 = leitorString.nextLine();
+                
+        System.out.println("-".repeat(72));        
         
         if(!"l7nnon".equals(pergunta1)){
                 System.out.println("Pergunta 1: errada");
@@ -249,35 +279,24 @@ public class Utilitaria {
                 pontos--;
             } 
         
-        System.out.println("-".repeat(72));
+        exibirLinha();
+        
+        System.out.println(String.format("-------------------Acumulou %d pontos-------------------",pontos));
             
         if (pontos < 5) {
-            System.out.println("Tente outra vez!!!");
+            System.out.println("-------------------Tente outra vez!!!-------------------");
         }
         else if(pontos < 8){
-            System.out.println("Na proxima você pode se sair melhor");
+            System.out.println("-------------------Na proxima você pode se sair melhor-------------------");
         }
         else{
-            System.out.println("Caraca você é um gênio");
-        }
-            
-        System.out.println(String.format("Acumulou %d pontos",pontos));
-                
-    }
-    
-    void encerramentoPrograma(String nome){
-        System.out.println(String.format("Agradecemos pela sua visita"
-                + " ao nosso MenuSpotify %s!",nome));
-    }
-    
-    void retornarMenu (Integer retornarEscolha){
-        
-        System.out.println("Deseja retomar ao menu?\n"
-                                 + "1 - Sim\n"
-                                 + "2 - Não\n");
-        switch(retornarEscolha){
-            case 1:
-                
+            System.out.println("-------------------Caraca você é um gênio-------------------");
         } 
+        exibirLinha();
+    }
+    
+    void encerramentoPrograma(){
+        System.out.println(String.format("Agradecemos sua visita"
+                + " ao nosso MenuSpotify %s!",nomeDigitado));
     }
 }
